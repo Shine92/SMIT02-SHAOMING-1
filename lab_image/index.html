@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />
+
+    <style type="text/css">
+        body {
+            background-color: #F5F5F5;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        #myCanvas {
+            border-style: solid;
+            border-width: 1px;
+        }
+
+        #img400 {
+            display: none;
+        }
+
+        .colorStyle {
+            display: none;
+        }
+
+        /*a:link,*/
+
+        /*a:visited {*/
+
+        /*    background-color: white;*/
+
+        /*    color: black;*/
+
+        /*    border: 2px solid green;*/
+
+        /*    padding: 10px 20px;*/
+
+        /*    text-align: center;*/
+
+        /*    text-decoration: none;*/
+
+        /*    display: inline-block;*/
+
+        /*}*/
+
+        /*a:hover,*/
+
+        /*a:active {*/
+
+        /*    background-color: green;*/
+
+        /*    color: white;*/
+
+        /*}*/
+
+        #myCanvas {
+            margin-left: 28px;
+            margin-top: 10px;
+        }
+
+        img {
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+        }
+
+        img:hover {
+            opacity: 1.0;
+            filter: alpha(opacity=100);
+        }
+        
+        #myText:hover{
+            background-color:green;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="col-sm-3">
+        <div class="row">
+            <div class="form-group">
+                <canvas id="myCanvas" name="myCanvas" width="400" height="400"></canvas>
+            </div>
+        </div>
+        <label for="textContent2">1.輸入文字:</label>
+        <input type="text" name="textContent2" id="textContent2" placeholder="請在這輸入您的文字" class="form-control" />
+        <!--<button type="button" name="textButton" id="textButton">輸入</button>-->
+
+        <hr>
+        <label for="fillOrStroke">2.文字效果:</label>
+        <select id="fillOrStroke" class="form-control">
+        <option value = "fill">實心填滿</option>
+        <option value = "stroke">無填滿</option>
+        </select>
+
+
+
+        <label for="textSize">3.文字大小:</label>
+        <select id="textSize" class="form-control">
+            <option value="26px">26px</option>
+            <option value="32px">32px</option>
+            <option value="42px">42px</option>
+            <option value="48px">48px</option>
+            <option value="54px">54px</option>
+            <option value="60px">60px</option>
+        </select>
+
+
+        <label for="fillColor">4.文字顏色:</label>
+        <input type="color" name="fillColor" id="fillColor" class="form-control" />
+        <input type="color" name="strokeColor" id="strokeColor" class="form-control colorStyle" />
+        <button id="grdStart" class="btn btn-default btn-block">漸層</button>
+
+
+
+
+        <!--<input type="color" name="grdColor1" id="grdColorStart" />-->
+        <!--<input type="color" name="grdColor2" id="grdColorEnd" />-->
+
+
+
+        <label for="btnOk">5.完成長輩圖</label>
+        <button id="btnOk" class="btn btn-success btn-block">完成</button>
+
+        <!--<button id="btnUndo">清除</button>-->
+
+        <!--<div id="demo">XY座標</div>-->
+        <!--<div id="debug">debug</div>-->
+
+
+        <!--<label for="aDownload">6.另存圖片</label>-->
+        <a id="aDownload" href="#" download="ImageDownload" class="btn btn-primary btn-block">下載</a>
+
+        <img src="images/400A.jpg" id="img400" />
+        <!--<img id="imgView" src="#" width="400" height="400" style="border:1px solid #000000;" />-->
+    </div>
+
+    <div class="col-sm-6" style="margin-left:18px">
+        <div class="row">
+            <div class="form-group">
+
+                <div class=" img-thumbnail">
+                    <img src="images/400D.jpg" width="200" height="200" name="img" class="img"></img>
+                </div>
+                <div class=" img-thumbnail">
+                    <img src="images/400C.jpg" width="200" height="200" name="img" class="img"></img>
+                </div>
+                <div class=" img-thumbnail">
+                    <img src="images/400B.jpg" width="200" height="200" name="img" class="img"></img>
+                </div>
+                <div class=" img-thumbnail">
+                    <img src="images/400E.jpg" width="200" height="200" name="img" class="img"></img>
+                </div>
+                <div class=" img-thumbnail">
+                    <img src="images/400F.jpg" width="200" height="200" name="img" class="img"></img>
+                </div>
+                <div class=" img-thumbnail">
+                    <img src="images/400G.jpg" width="200" height="200" name="img" class="img"></img>
+                </div>
+                <div class=" img-thumbnail">
+                    <img src="images/400A.jpg" width="200" height="200" name="img" class="img"></img>
+                </div>
+                <div class=" img-thumbnail">
+                    <img src="images/400H.jpg" width="200" height="200" name="img" class="img"></img>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="well well-sm">
+            <p>長輩圖產生器：</p>
+            <p>客製化您專屬的貼圖，它就是那麼簡單。</p>
+        </div>
+        <div class="well well-sm">
+            <p>步驟一、在上面的圖庫中挑選您喜歡的圖片。</p>
+
+        </div>
+        <div class="well well-sm" id="myText">
+            <p>步驟二、添加一段精彩的文字。</p>
+        </div>
+        <div class="well well-sm">
+            <p>步驟三、點選完成並且下載。</p>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var dragok = false;
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        var imgValue = new Image();
+        // var img = document.getElementById("img400");
+        // ctx.drawImage(img, 0, 0); //畫上圖片
+        ctx.font = "Bold oblique 26px Arial"; //文字Style
+        // var grd = ctx.createLinearGradient(10, 100, 0, 0); //x0,x1,y0,y1 
+        ctx.textBaseline = "top"; //例:fillText("",x,y);textBaseline相較於0的位置下面 //top middle bottom
+        ctx.textAlign = "left"; //left center right 基於參考的右邊
+
+        // alert(document.querySelector(".img"));
+        var imgItem = document.getElementsByName("img");
+        for (var i = 0; i < imgItem.length; i++) {
+            imgItem[i].addEventListener("click", function() {
+                imgValue.src = event.target.src;
+            }, false);
+        }
+        document.getElementById("myText").addEventListener("click",myText,false);
+        document.getElementById("textContent2").addEventListener("keyup", drawMessage, false); //使用者輸入的文字馬上顯示
+        document.getElementById("fillOrStroke").addEventListener("change", fillOrStrokeChange, false); //使用者文字的Style
+        document.getElementById("fillColor").addEventListener("change", colorChange1, false); //更換文字顏色
+        document.getElementById("strokeColor").addEventListener("change", colorChange2, false); //更換文字顏色
+        document.getElementById("textSize").addEventListener("change", fontSizeChange, false); //更換文字大小
+        document.getElementById("grdStart").addEventListener("click", grdColor, false); //漸層開始顏色
+        document.getElementById("btnOk").addEventListener("click", shareText, false); //認同請分享
+        // document.getElementById("btnUndo").addEventListener("click", clearCanvas, false); //清除畫布還原初始值
+
+        var msg;
+        var msgX = 30;
+        var msgY = 30;
+        var fillOrStroke;
+        var color;
+        var fontSize;
+        var grdStart;
+        var grdEnd = "#FFFFFF";
+        var m;
+        var dragImg = setInterval(drawMessage, 10);
+
+        // var grdStart = document.getElementById("grdColorStart").value;
+        // var grdEnd = document.getElementById("grdColorEnd").value;
+
+        //更換文字的效果
+        function fillOrStrokeChange(e) {
+            fillOrStroke = e.target.value;
+
+            // alert("fillOrStroke: " + fillOrStroke);
+            drawMessage();
+            // alert("drawMessage()");
+
+        }
+
+        //取得目前元素座標
+        // function myFunction(e) {
+        //     x = e.clientX;
+        //     y = e.clientY;
+        //     var coor = "Coordinates: (" + x + "," + y + ")";
+        //     document.getElementById("demo").innerHTML = coor;
+        //     clear();
+
+        // }
+
+        // //取得目前元素座標
+        // c.addEventListener("mousemove", function(e) {
+        //     var k = e.offsetX;
+        //     var z = e.offsetY;
+        //     document.getElementById("debug").innerText = "offsetX: " + k + "e.offsetY: " + z;
+        // });
+
+        //畫上文字
+        function drawMessage() {
+
+            msg = document.getElementById("textContent2").value;
+
+            clear();
+            ctx.fillStyle = color;
+            ctx.fillText(msg, msgX, msgY);
+            m = ctx.measureText(msg)
+            // alert("drawMessage: " + fontSize);
+
+
+            // alert("drawMessage: " + msgStyle);
+            if (fillOrStroke == "stroke") {
+                // alert("msgStyle == stroke");
+                document.getElementById("fillColor").setAttribute("class", "colorStyle");
+                document.getElementById("strokeColor").setAttribute("class", "form-control");
+                clear();
+                ctx.strokeStyle = color;
+                ctx.strokeText(msg, msgX, msgY);
+                // ctx.font = "Bold oblique " + fontSize + " Arial";
+
+            }
+            else if (fillOrStroke == "fill") {
+                // alert("msgStyle == fill");
+                document.getElementById("fillColor").setAttribute("class", "form-control");
+                document.getElementById("strokeColor").setAttribute("class", "colorStyle");
+                clear();
+                ctx.fillStyle = color;
+                ctx.fillText(msg, msgX, msgY);
+                // ctx.font = "Bold oblique " + fontSize + " Arial";
+
+            };
+
+
+        };
+        //清除畫布
+        function clear() {
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.drawImage(imgValue, 0, 0);
+        };
+        //完全清除畫布
+        // function clearCanvas() {
+        //     clearInterval(dragImg);
+        //     ctx.clearRect(0, 0, c.width, c.height);
+        //     ctx.drawImage(img, 0, 0);
+
+        //     msgX = 30;
+        //     msgY = 30;
+        //     color = "#000000";
+        //     fontSize = "30px";
+        // };
+
+        //更換圖片
+        function imgChange() {
+            // var imgValue = new Image(400, 400);
+            // imgValue.src = event.target.src;
+            alert(event.target.src);
+        }
+        //更改文字顏色
+        function colorChange1() {
+            color = document.getElementById("fillColor").value;
+            
+            // alert(color);
+            drawMessage();
+
+        };
+        function colorChange2() {
+            
+            color = document.getElementById("strColor").value;
+            // alert(color);
+            drawMessage();
+
+        };
+        //更改文字大小
+        function fontSizeChange() {
+            fontSize = document.getElementById("textSize").value;
+            // alert("fontSizeChange: " + fontSize);
+            // drawMessage();
+            ctx.font = "Bold oblique " + fontSize + " Arial";
+            drawMessage();
+            // alert("fontSizeChange drawMessage");
+
+        };
+
+        //漸層
+        function grdColor() {
+            grdStart = document.getElementById("fillColor").value;
+            // alert(grdStart);
+            // alert(grdEnd);
+            // alert(Math.floor(m.width));
+            var grd = ctx.createLinearGradient(30, 50, Math.floor(m.width), Math.floor(m.width)); //x0,x1,y0,y1 
+            grd.addColorStop(0, grdStart);
+            grd.addColorStop(1, grdEnd);
+            color = grd;
+            // setInterval(drawMessage, 10);
+
+
+        };
+
+        // function grdColorChangeEnd(e) {
+        //     grdEnd = e.target.value;
+        //     alert(grdStart);
+        //     alert(grdEnd);
+        //     grd.addColorStop(0, grdStart);
+        //     grd.addColorStop(1, grdEnd);
+        //     color = grd;
+        //     drawMessage();
+        // }
+
+        //認同請分享
+        function shareText() {
+
+            clearInterval(dragImg);
+            var grdShare = ctx.createLinearGradient(50, 100, 100, 50); //x0,x1,y0,y1
+            grdShare.addColorStop(0, "red");
+            grdShare.addColorStop(1, "#FFFFFF");
+
+            ctx.font = "Bold oblique 26px Courier New";
+            ctx.fillStyle = grdShare;
+            ctx.fillText("認同請分享", 260, 370); //畫上文字
+            console.log(c.toDataURL("image/png"));
+            document.getElementById("aDownload").href = c.toDataURL("image/png");
+        };
+
+        //移動文字
+
+        function myMove(e) {
+            if (dragok) {
+                msgX = e.pageX - c.offsetLeft;
+                msgY = e.pageY - c.offsetTop;
+            };
+        };
+        //抓到文字
+        function myDown(e) {
+            if (e.pageX < msgX + 20 + c.offsetLeft && e.pageX > msgX - 20 +
+                c.offsetLeft && e.pageY < msgY + 20 + c.offsetTop &&
+                e.pageY > msgY - 20 + c.offsetTop) {
+                msgX = e.pageX - c.offsetLeft;
+                msgY = e.pageY - c.offsetTop;
+                dragok = true;
+                // debug.innerHTML = "down";
+                c.onmousemove = myMove;
+                // setInterval(drawMessage, 10);
+            };
+        };
+        //放開文字
+        function myUp() {
+            dragok = false;
+            // debug.innerHTML = "up";
+            // setInterval(drawMessage, 10);
+            c.onmousemove = null;
+            // clearInterval(dragImg);
+
+        };
+        //自動填入文字
+        function myText () {
+            // alert("123");
+            document.getElementById("textContent2").value = "在非洲,每60秒就有1分鐘過去";
+        }
+
+        document.getElementById("myCanvas").onmousedown = myDown;
+        document.getElementById("myCanvas").onmouseup = myUp;
+        // window.onload = drawMessage;
+    </script>
+
+</body>
+
+</html>
